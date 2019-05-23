@@ -1,3 +1,6 @@
+.runes {
+    margin: 20px;
+}
 @font-face {
     font-family: 'futhark';
     src: url(src/assets/font/RUNE.TTF);
@@ -6,4 +9,5 @@
     font-family: 'futhark';
     font-size: x-large;
     letter-spacing: 4px;
+    font-weight: bold;
 }

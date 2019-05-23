@@ -39,7 +39,7 @@ export class RunesComponent implements OnInit {
       } else if (i == 2) {
         do {
           two = Math.floor(Math.random() * 24);
-        } while (two === one);
+        } while (two == one);
         setTimeout(()=> this.runes += this.lots[two], interval);
       } else {
         do {
