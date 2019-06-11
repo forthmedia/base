@@ -61,7 +61,7 @@ export class RunesComponent implements OnInit {
   }
 
   fetch() {
-    var reqestURL = '/src/mock/database.json';
+    var reqestURL = 'http://localhost:3000/runes';
     var request = new XMLHttpRequest();
     request.open('GET', reqestURL);
     request.responseType = 'json';
