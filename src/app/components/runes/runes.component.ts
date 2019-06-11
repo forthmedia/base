@@ -23,6 +23,7 @@ export class RunesComponent implements OnInit {
     this.manticService = new ManticService;
     this.posibilities = this.manticService.permutation(24, 3);
     this.intro();
+    this.fetch();
   }
 
   onCast() {
@@ -56,6 +57,17 @@ export class RunesComponent implements OnInit {
     for (let i = 0; i < symbols.length; i++) {
       var interval = i * 1000;
       setTimeout(()=> this.runes += symbols[i], interval);
+    }
+  }
+
+  fetch() {
+    var reqestURL = '/src/mock/database.json';
+    var request = new XMLHttpRequest();
+    request.open('GET', reqestURL);
+    request.responseType = 'json';
+    request.send();
+    request.onload = function () {
+      var result = request.response;
     }
   }
 }

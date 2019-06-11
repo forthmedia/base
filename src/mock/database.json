@@ -1,0 +1,26 @@
+[
+    {
+        "rune" : "fehu",
+        "type" : "cattle"
+    },
+    {
+        "rune" : "uruz",
+        "type" : "aurochs"
+    },
+    {
+        "rune" : "thurisaz",
+        "type" : "giant"
+    },
+    {
+        "rune" : "ansuz",
+        "type" : "god"
+    },
+    {
+        "rune" : "raido",
+        "type" : "wagon"
+    },
+    {
+        "rune" : "kenaz",
+        "type" : "skill"
+    }
+]
