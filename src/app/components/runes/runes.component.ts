@@ -16,17 +16,29 @@ export class RunesComponent implements OnInit {
     'h', 'n', 'i', 'j', 'y', 'p', 'z', 's',
     't', 'b', 'e', 'm', 'l', 'q', 'd', 'o'
   ];
+  hasCast: boolean;
+  cast: Array<number>;
+  fetched;
 
-  constructor() { }
+  constructor() {
+    this.hasCast = false;
+    this.cast = [];
+    this.fetched = null;
+  }
 
   ngOnInit() {
     this.manticService = new ManticService;
     this.posibilities = this.manticService.permutation(24, 3);
     this.intro();
-    this.fetch();
+    let self = this;
+    this.fetch().then(function(response) {
+      self.fetched = response;
+      console.debug("fetch response: ", response);
+    });
   }
 
   onCast() {
+    this.hasCast = false;
     this.runes = '\xa0';
     let one: number = -1;
     let two: number = -1;
@@ -49,7 +61,24 @@ export class RunesComponent implements OnInit {
         setTimeout(()=> this.runes += this.lots[three], interval);
       }
     }
-   }
+    //after the cast
+    setTimeout(()=> this.setCast(one,two,three), 4000);
+  }
+
+  setCast(one, two, three) {
+    this.cast = [];
+    this.cast.push(one);
+    this.cast.push(two);
+    this.cast.push(three);
+    this.hasCast = true;
+  }
+
+  onSave() {
+    localStorage.clear();
+    localStorage.setItem('one', this.cast[0].toString());
+    localStorage.setItem('two', this.cast[1].toString());
+    localStorage.setItem('three', this.cast[2].toString());
+  }
 
   intro() {
     var symbols: string = "futark";
@@ -61,13 +90,29 @@ export class RunesComponent implements OnInit {
   }
 
   fetch() {
-    var reqestURL = 'http://localhost:3000/runes';
-    var request = new XMLHttpRequest();
-    request.open('GET', reqestURL);
-    request.responseType = 'json';
-    request.send();
-    request.onload = function () {
-      var result = request.response;
-    }
+    return new Promise(function(resolve, reject) {
+      // XHR
+      var reqestURL = 'http://localhost:3000/runes';
+      var request = new XMLHttpRequest();
+      request.open('GET', reqestURL);  
+      request.onload = function () {
+        if (request.status == 200) {
+          var response = request.response;
+          var result = JSON.parse(response);
+          resolve(result);
+        } else {
+          // reject with error text
+          console.debug("fetch error: ", request.statusText);
+          reject(Error(request.statusText));
+        }
+      }
+
+      request.onerror = function () {
+        reject(Error('Cannot fetch.'));
+      }
+
+      request.send();
+    });
   }
+
 }

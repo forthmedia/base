@@ -4,6 +4,7 @@
   <span class="futhark">{{runes}}</span>
   <p>
     <button (click)="onCast()">Cast</button>
+    <button (click)="onSave()" [disabled]="! hasCast">Save</button>
   </p>
   <p>
     A basic divnatory spread based on the Elder Futhark
