@@ -13,3 +13,20 @@ export class TestBedComponent implements OnInit {
   }
 
 }
+
+function looper(num) {
+  for (var i = 0; i < num; i++) {
+
+    (function(j){
+      say(j);
+    })(i);
+
+  }
+}
+
+function say(j) {
+  var interval = j * 1000;
+  setTimeout(function() {
+    console.log("The value of i is " + j);
+  }, interval);
+}
