@@ -30,10 +30,10 @@ export class RunesComponent implements OnInit {
     this.manticService = new ManticService;
     this.posibilities = this.manticService.permutation(24, 3);
     this.intro();
-    let self = this;
-    this.fetch().then(function(response) {
-      self.fetched = response;
-      console.debug("fetch response: ", response);
+    this.fetch().then(response => {
+      //ES6 this
+      this.fetched = response;
+      console.debug("fetched response: ", this.fetched);
     });
   }
 
@@ -90,12 +90,12 @@ export class RunesComponent implements OnInit {
   }
 
   fetch() {
-    return new Promise(function(resolve, reject) {
+    return new Promise((resolve, reject) => {
       // XHR
       var reqestURL = 'http://localhost:3000/runes';
       var request = new XMLHttpRequest();
       request.open('GET', reqestURL);  
-      request.onload = function () {
+      request.onload = ()=> {
         if (request.status == 200) {
           var response = request.response;
           var result = JSON.parse(response);
@@ -107,7 +107,7 @@ export class RunesComponent implements OnInit {
         }
       }
 
-      request.onerror = function () {
+      request.onerror = ()=> {
         reject(Error('Cannot fetch.'));
       }
 
